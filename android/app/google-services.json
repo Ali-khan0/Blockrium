@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "748554685853",
+    "project_id": "maticlegend-b9841",
+    "storage_bucket": "maticlegend-b9841.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748554685853:android:a8b52c93c2cae3e6043374",
+        "android_client_info": {
+          "package_name": "com.maticlegend.web3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "748554685853-7lq8rfiahh5qjugib579ska5cl0id2kg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.maticlegend.web3",
+            "certificate_hash": "dea91fc2967dfec7b2c35d52ca5734e547ed8415"
+          }
+        },
+        {
+          "client_id": "748554685853-r6efuvs51rknhodtts9ov8o2e2huqo8l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-tcoqIBo5pMMFa26Nfjpm1b5HtXR4_Gs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "748554685853-r6efuvs51rknhodtts9ov8o2e2huqo8l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
