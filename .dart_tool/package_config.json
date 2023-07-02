@@ -8,12 +8,6 @@
       "languageVersion": "2.18"
     },
     {
-      "name": "adcolony_flutter",
-      "rootUri": "file:///C:/Users/ALI%20KHAN/AppData/Local/Pub/Cache/hosted/pub.dev/adcolony_flutter-1.7.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
-    },
-    {
       "name": "animated_text_kit",
       "rootUri": "file:///C:/Users/ALI%20KHAN/AppData/Local/Pub/Cache/hosted/pub.dev/animated_text_kit-4.2.2",
       "packageUri": "lib/",
@@ -166,12 +160,6 @@
     {
       "name": "dropdown_search",
       "rootUri": "file:///C:/Users/ALI%20KHAN/AppData/Local/Pub/Cache/hosted/pub.dev/dropdown_search-3.0.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "facebook_audience_network",
-      "rootUri": "file:///C:/Users/ALI%20KHAN/AppData/Local/Pub/Cache/hosted/pub.dev/facebook_audience_network-1.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -530,12 +518,6 @@
       "languageVersion": "2.18"
     },
     {
-      "name": "otpless_flutter",
-      "rootUri": "file:///C:/Users/ALI%20KHAN/AppData/Local/Pub/Cache/hosted/pub.dev/otpless_flutter-1.0.8",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
       "name": "package_info",
       "rootUri": "file:///C:/Users/ALI%20KHAN/AppData/Local/Pub/Cache/hosted/pub.dev/package_info-2.0.2",
       "packageUri": "lib/",
@@ -866,24 +848,6 @@
       "languageVersion": "2.17"
     },
     {
-      "name": "uni_links",
-      "rootUri": "file:///C:/Users/ALI%20KHAN/AppData/Local/Pub/Cache/hosted/pub.dev/uni_links-0.5.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "uni_links_platform_interface",
-      "rootUri": "file:///C:/Users/ALI%20KHAN/AppData/Local/Pub/Cache/hosted/pub.dev/uni_links_platform_interface-1.0.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "uni_links_web",
-      "rootUri": "file:///C:/Users/ALI%20KHAN/AppData/Local/Pub/Cache/hosted/pub.dev/uni_links_web-0.1.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "unity_ads_plugin",
       "rootUri": "file:///C:/Users/ALI%20KHAN/AppData/Local/Pub/Cache/hosted/pub.dev/unity_ads_plugin-0.3.8",
       "packageUri": "lib/",
@@ -980,12 +944,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "vungle",
-      "rootUri": "file:///C:/Users/ALI%20KHAN/AppData/Local/Pub/Cache/hosted/pub.dev/vungle-0.6.12",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "wave_linear_progress_indicator",
       "rootUri": "file:///C:/Users/ALI%20KHAN/AppData/Local/Pub/Cache/hosted/pub.dev/wave_linear_progress_indicator-0.1.0",
       "packageUri": "lib/",
@@ -1046,7 +1004,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-07-02T12:13:40.382401Z",
+  "generated": "2023-07-02T12:50:18.810720Z",
   "generator": "pub",
   "generatorVersion": "2.19.6"
 }

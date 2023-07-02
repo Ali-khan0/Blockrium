@@ -7,8 +7,6 @@ import 'package:Blockrium/res/colors/app_colors.dart';
 import 'package:Blockrium/version.dart';
 import 'package:Blockrium/widget/wallet_widget.dart';
 import 'package:Blockrium/widget/widget.dart';
-import 'package:adcolony_flutter/adcolony_flutter.dart';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 

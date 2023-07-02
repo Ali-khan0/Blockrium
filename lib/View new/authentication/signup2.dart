@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
-import 'package:otpless_flutter/otpless_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:Blockrium/res/colors/app_colors.dart';

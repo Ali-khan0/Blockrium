@@ -69,14 +69,14 @@ dependencies:
   flutter_local_notifications: ^13.0.0
   permission_handler: ^10.2.0
   connectivity: ^3.0.6
-  otpless_flutter: ^1.0.8
+  # otpless_flutter: ^1.0.8
   speech_balloon: ^0.0.4
-  adcolony_flutter: ^1.7.1
-  facebook_audience_network: ^1.0.0
+  # adcolony_flutter: ^1.7.1
+  # facebook_audience_network: ^1.0.0
   unity_ads_plugin: ^0.3.7
   # bitlabs: ^2.0.1
   flutter_svg: ^2.0.4
-  vungle: ^0.6.12
+  # vungle: ^0.6.12
   flutter_json: ^0.0.1+1
   flutter_downloader: ^1.10.4
   dio: ^5.2.1
