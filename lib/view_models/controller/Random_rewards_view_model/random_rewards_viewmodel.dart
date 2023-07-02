@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../Ads/Unity/unityads.dart';
 import '../../../View/Resources/appurl.dart';
+import '../../../View/bottomnav.dart';
 import '../Wallet_view_model/wallet_view_model.dart';
 
 class RandomRewardsController extends GetxController {
@@ -60,7 +62,11 @@ class RandomRewardsController extends GetxController {
           "${randomRewardsData["reward"].toString()} Coins Added to Wallet");
       getRewardsStatus();
       walletViewModel.userWallet();
-      // UnityAdManater.showRwdAd();
+      UnityAdManater.showRwdAd()
+          .then((value) => UnityAdManater.loadUnityAdRWD());
+      Future.delayed(Duration(seconds: 3), () {
+        Get.offAll(() => MyBottomNavbar());
+      });
     } else {
       print("====== not geting new mining data data");
     }

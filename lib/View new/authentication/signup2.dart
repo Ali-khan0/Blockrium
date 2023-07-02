@@ -49,9 +49,9 @@ class _SignUpPage2State extends State<SignUpPage2> {
         await http.get(Uri.parse("https://maticlegend.com/api/get-countries"));
     if (response.statusCode == 200) {
       countryData = jsonDecode(response.body.toString());
-      print(countryData);
+      debugPrint(countryData);
     } else {
-      print("not getting data of Country");
+      debugPrint("not getting data of Country");
     }
   }
 
@@ -124,75 +124,6 @@ class _SignUpPage2State extends State<SignUpPage2> {
                             SizedBox(
                               height: h * 0.010,
                               width: w,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 15.0, right: 15.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    " Confirm Password",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Color(0xffA4A4A4),
-                                    ),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0)),
-                                        gradient: LinearGradient(colors: [
-                                          Color(0xffFFFFFF).withOpacity(0.2),
-                                          Color(0xffFFFFFF).withOpacity(0.1),
-                                        ])),
-                                    child: TextFormField(
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                      validator: ((txt) {
-                                        if (txt == null || txt.isEmpty) {
-                                          return "Please Enter 6 digit Password";
-                                        }
-                                        if (txt.length < 6) {
-                                          return "Password must has 6 characters";
-                                        } else {
-                                          return null;
-                                        }
-                                      }),
-                                      obscureText: !_passwordVisible2,
-                                      controller: signupViewModel
-                                          .passwordConfirmationCTL.value,
-                                      decoration: InputDecoration(
-                                          hintStyle: TextStyle(
-                                            color: Color(0xffA4A4A4),
-                                          ),
-                                          prefixIcon: Icon(
-                                            Icons.key_sharp,
-                                            color: Color(0xffA4A4A4),
-                                          ),
-                                          suffixIcon: IconButton(
-                                            icon: Icon(
-                                              _passwordVisible2
-                                                  ? Icons.visibility_outlined
-                                                  : Icons
-                                                      .visibility_off_outlined,
-                                              color: Color(0xffA4A4A4),
-                                            ),
-                                            onPressed: () {
-                                              // Update the state i.e. toogle the state of passwordVisible variable
-                                              setState(() {
-                                                _passwordVisible2 =
-                                                    !_passwordVisible2;
-                                              });
-                                            },
-                                          ),
-                                          border: InputBorder.none,
-                                          hintText: "Confirm Password"),
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ),
                             SizedBox(
                               height: h * 0.010,
@@ -267,6 +198,76 @@ class _SignUpPage2State extends State<SignUpPage2> {
                                 ],
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 15.0, right: 15.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    " Confirm Password",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Color(0xffA4A4A4),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        gradient: LinearGradient(colors: [
+                                          Color(0xffFFFFFF).withOpacity(0.2),
+                                          Color(0xffFFFFFF).withOpacity(0.1),
+                                        ])),
+                                    child: TextFormField(
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                      validator: ((txt) {
+                                        if (txt == null || txt.isEmpty) {
+                                          return "Please Enter 6 digit Password";
+                                        }
+                                        if (txt.length < 6) {
+                                          return "Password must has 6 characters";
+                                        } else {
+                                          return null;
+                                        }
+                                      }),
+                                      obscureText: !_passwordVisible2,
+                                      controller: signupViewModel
+                                          .passwordConfirmationCTL.value,
+                                      decoration: InputDecoration(
+                                          hintStyle: TextStyle(
+                                            color: Color(0xffA4A4A4),
+                                          ),
+                                          prefixIcon: Icon(
+                                            Icons.key_sharp,
+                                            color: Color(0xffA4A4A4),
+                                          ),
+                                          suffixIcon: IconButton(
+                                            icon: Icon(
+                                              _passwordVisible2
+                                                  ? Icons.visibility_outlined
+                                                  : Icons
+                                                      .visibility_off_outlined,
+                                              color: Color(0xffA4A4A4),
+                                            ),
+                                            onPressed: () {
+                                              // Update the state i.e. toogle the state of passwordVisible variable
+                                              setState(() {
+                                                _passwordVisible2 =
+                                                    !_passwordVisible2;
+                                              });
+                                            },
+                                          ),
+                                          border: InputBorder.none,
+                                          hintText: "Confirm Password"),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
                             SizedBox(
                               height: h * 0.010,
                               width: w,
@@ -440,7 +441,7 @@ class _SignUpPage2State extends State<SignUpPage2> {
                                           "Please Select Your Country", "");
                                     }
                                   } else {
-                                    print("form is not valid");
+                                    debugPrint("form is not valid");
                                   }
                                 },
                                 child: Obx(() => roundButton(

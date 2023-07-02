@@ -30,9 +30,9 @@ class _SignUpPageState extends State<SignUpPage> {
         await http.get(Uri.parse("https://maticlegend.com/api/get-countries"));
     if (response.statusCode == 200) {
       countryData = jsonDecode(response.body.toString());
-      print(countryData);
+      debugPrint(countryData);
     } else {
-      print("not getting data of Country");
+      debugPrint("not getting data of Country");
     }
   }
 
@@ -147,7 +147,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           InkWell(
                               onTap: () {
-                                print(signupViewModel
+                                debugPrint(signupViewModel
                                             .refferalCTL.value.text.isEmpty ==
                                         true
                                     ? null

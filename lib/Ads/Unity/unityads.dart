@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 
+import '../../view_models/controller/Ads_viewModel/adx_viewmodel.dart';
 import '../AppLovin/applovin.dart';
+
+final AdxManagerController adxManagerController = AdxManagerController();
 
 class UnityAdManater {
   static Future<void> loadUnityAdINT() async {
@@ -20,12 +23,13 @@ class UnityAdManater {
       onFailed: (placementId, error, message) =>
           print('Load Failed $placementId: $error $message'),
     );
+    adxManagerController.createInterstitialAd();
   }
 
   static Future<void> showIntAd() async {
     UnityAds.showVideoAd(
       placementId: 'Interstitial_Android',
-      onStart: (placementId) => print('Video Ad $placementId started'),
+      onStart: (placementId) => loadUnityAdINT(),
       onClick: (placementId) => print('Video Ad $placementId click'),
       onSkipped: (placementId) => print('Video Ad $placementId skipped'),
       onComplete: (placementId) => print('Video Ad $placementId completed'),
@@ -37,15 +41,14 @@ class UnityAdManater {
   static Future<void> showRwdAd() async {
     UnityAds.showVideoAd(
       placementId: 'Rewarded_Android',
-      onStart: (placementId) => print('Video Ad $placementId started'),
+      onStart: (placementId) => loadUnityAdRWD(),
       onClick: (placementId) => print('Video Ad $placementId click'),
-      onSkipped: (placementId) => print('Video Ad $placementId skipped'),
-      onComplete: (placementId) => print('Video Ad $placementId completed'),
+      onSkipped: (placementId) => adxManagerController.showInterstitialAd(),
+      onComplete: (placementId) => adxManagerController.showInterstitialAd(),
       onFailed: (placementId, error, message) =>
           print('Video Ad $placementId failed: $error $message'),
     );
     // randomRewards(customsetstate);
-    loadUnityAdRWD();
   }
 }
 // import 'package:flutter/material.dart';

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import 'package:wave_linear_progress_indicator/wave_linear_progress_indicator.dart';
 
+import '../../View/bottomnav.dart';
 import '../../res/Colorsnew/appcolors.dart';
 import '../../view_models/controller/Wallet_view_model/wallet_view_model.dart';
 
@@ -65,31 +66,12 @@ Widget miningContainer(context, calculate, calculatePercentage, modelData) {
                           minutes: 0,
                           seconds: 0),
                     ),
-                    // SlideCountdown(
-                    //   textStyle: TextStyle(color: Colors.white),
-                    //   decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.all(Radius.circular(10)),
-                    //       gradient: LinearGradient(colors: [
-                    //         AppColor.redColor,
-                    //         AppColor.pinkColor,
-                    //         AppColor.purpleColor
-                    //       ])),
-                    //   onChanged: (value) {},
-                    //   duration: Duration(
-                    //     hours: 5,
-                    //     minutes: 0,
-                    //   ),
-                    // ),
                   ),
                 ),
               )
             ],
           ),
         ),
-        // Text(
-        //   calculatePercentage.toString(),                                               
-        //   style: TextStyle(color: Colors.white),
-        // ),
         Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0),
           child: WaveLinearProgressIndicator(
@@ -113,28 +95,20 @@ Widget miningContainer(context, calculate, calculatePercentage, modelData) {
           child: InkWell(
             onTap: () {
               modelData.differenceInHours >= 24
-                  ? _walletViewModel.newmining()
+                  ? _walletViewModel
+                      .newmining()
+                      .then((value) => Future.delayed(Duration(seconds: 3), () {
+                            Get.offAll(() => MyBottomNavbar());
+                          }))
                   :
-                  // initializeInterstitialAdsMining();
+                  // // initializeInterstitialAdsMining();
                   Get.snackbar(
                       "Mining Already Initialized", "Please wait for 24 hours");
+              // customSetstate();
             },
-            child:
-                //  roundButton(
-                //     () {
-                //   if (calculate >= 24) {
-                //     return roundButton("Start", 70.0, 35.0);
-                //   } else if (calculate < 0) {
-                //     return roundButton("Start", 70.0, 35.0);
-                //   } else {
-                //     return initilizedMining("Initialized", 80.0, 35.0);
-                //   }
-                // }(),
-                modelData.differenceInHours >= 24
-                    ? roundButton("Start", 70.0, 35.0)
-                    : initilizedMining("Initialized", 80.0, 35.0),
-            // 70.0,
-            // 35.0)),
+            child: modelData.differenceInHours >= 24
+                ? roundButton("Start", 70.0, 35.0)
+                : initilizedMining("Initialized", 80.0, 35.0),
           ),
         )
       ],
@@ -142,7 +116,7 @@ Widget miningContainer(context, calculate, calculatePercentage, modelData) {
   );
 }
 
-Widget miningContainerNull(context) {
+Widget miningContainerNull(context, _walletViewModel) {
   final WalletViewModel _walletViewModel = WalletViewModel();
 
   return Container(
@@ -199,21 +173,6 @@ Widget miningContainerNull(context) {
                         minutes: 0,
                       ),
                     ),
-                    // SlideCountdown(
-                    //   textStyle: TextStyle(color: Colors.white),
-                    //   decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.all(Radius.circular(10)),
-                    //       gradient: LinearGradient(colors: [
-                    //         AppColor.redColor,
-                    //         AppColor.pinkColor,
-                    //         AppColor.purpleColor
-                    //       ])),
-                    //   onChanged: (value) {},
-                    //   duration: Duration(
-                    //     hours: 5,
-                    //     minutes: 0,
-                    //   ),
-                    // ),
                   ),
                 ),
               )
@@ -240,10 +199,12 @@ Widget miningContainerNull(context) {
         Padding(
           padding: const EdgeInsets.only(right: 15.0),
           child: InkWell(
-              onDoubleTap: () {
-                _walletViewModel.newmining();
+              onTap: () {
+                _walletViewModel
+                    .newmining()
+                   ;
               },
-              child: roundButton("loading..", 70.0, 35.0)),
+              child: roundButton("Start", 70.0, 35.0)),
         )
       ],
     ),

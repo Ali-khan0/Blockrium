@@ -1,7 +1,9 @@
 import 'package:Blockrium/View%20new/Games/webview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 
+import '../../Ads/Unity/unityads.dart';
 import '../../data/response/status.dart';
 import '../../res/Colorsnew/appcolors.dart';
 import '../../res/colors/style.dart';
@@ -25,6 +27,9 @@ class _GamesPageState extends State<GamesPage> {
   void initState() {
     super.initState();
     gamesController.gameListApi();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await UnityAdManater.loadUnityAdINT();
+    });
   }
 
   @override
@@ -44,6 +49,15 @@ class _GamesPageState extends State<GamesPage> {
                 body: SingleChildScrollView(
                   child: Column(
                     children: [
+                      UnityBannerAd(
+                        placementId: 'Banner_Android',
+                        onLoad: (placementId) =>
+                            print('Banner loaded: $placementId'),
+                        onClick: (placementId) =>
+                            print('Banner clicked: $placementId'),
+                        onFailed: (placementId, error, message) => print(
+                            'Banner Ad $placementId failed: $error $message'),
+                      ),
                       // ClipRRect(
                       //   borderRadius: BorderRadius.circular(
                       //       10.0), // Set the desired border radius value
@@ -140,6 +154,7 @@ class _GamesPageState extends State<GamesPage> {
                                               onTap: () {
                                                 Get.to(GamePlay(
                                                     url: game.url.toString()));
+                                                UnityAdManater.showIntAd();
                                               },
                                               child: GlowingButton(
                                                 text: "play".tr,

@@ -49,7 +49,7 @@ class _EditProfileState extends State<EditProfile> {
         Utils.snackbar(data["errors"], "");
       }
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
       Utils.snackbar("Something went wrong", "");
     } finally {
       setState(() {
@@ -210,9 +210,9 @@ class _EditProfileState extends State<EditProfile> {
                     //       } else if (newPass.text.isEmpty) {
                     //         Utils.snackbar("New Password Required", "");
                     //       } else {
-                    //         print(email.text);
-                    //         print(phone.text);
-                    //         print(newPass.text);
+                    //         debugPrint(email.text);
+                    //         debugPrint(phone.text);
+                    //         debugPrint(newPass.text);
                     //         changePass3(
                     //             email.text, phone.text, newPass.text, context);
                     //       }
@@ -227,15 +227,15 @@ class _EditProfileState extends State<EditProfile> {
                           } else if (newPass.text.isEmpty) {
                             Utils.snackbar("New Password Required", "");
                           } else {
-                            print(email.text);
-                            print(phone.text);
-                            print(newPass.text);
+                            debugPrint(email.text);
+                            debugPrint(phone.text);
+                            debugPrint(newPass.text);
                             changePass3(
                                 email.text, phone.text, newPass.text, context);
                           }
                         },
                         child: GlowingButtonAuth(
-                            text: "Update Password", loading: false))
+                            text: "Update Password", loading: isLoading))
                   ],
                 ),
               ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../View new/Profile/profile.dart';
+import '../View new/Wallet/wallet_page.dart';
 import '../new_changes.dart';
 import '../res/AppIcons/appicons.dart';
 import '../version.dart';
@@ -24,7 +25,7 @@ class MyBottomNavbar extends StatefulWidget {
 }
 
 class _MyBottomNavbarState extends State<MyBottomNavbar> {
-  final tabs = [HomePage(), GamesPage(), Wallet(), ProfilePageNew()];
+  final tabs = [HomePage(), GamesPage(), WalletPageNnew(), ProfilePageNew()];
 
   final BottomNavController bottomnavController = BottomNavController();
 
@@ -34,8 +35,8 @@ class _MyBottomNavbarState extends State<MyBottomNavbar> {
     bottomnavController.getversion().then((value) {
       if (bottomnavController.version != null &&
           // bottomnavController.version <= 10) {
-          bottomnavController.version <= 14) {
-        // 13
+          bottomnavController.version <= 16) {
+        // 15
       } else {
         Navigator.pushReplacement(
             context,

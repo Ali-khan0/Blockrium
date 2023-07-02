@@ -7,8 +7,10 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import '../../../Ads/Unity/unityads.dart';
 import '../../../View/Resources/appurl.dart';
 import '../../../View/Resources/utils.dart';
+import '../../../View/bottomnav.dart';
 import '../../../main.dart';
 
 class WalletViewModel extends GetxController {
@@ -67,7 +69,12 @@ class WalletViewModel extends GetxController {
       Utils.snackbar(newminingdata.value["message"].toString(), "");
       showNoification(25, "Your Dear User, Your Mining Has Been Ended",
           "Restart Your Mining Now");
-      showInterstitialAd();
+      Future.delayed(Duration(seconds: 3), () {
+        Get.offAll(() => MyBottomNavbar());
+      });
+      UnityAdManater.showRwdAd()
+          .then((value) => UnityAdManater.loadUnityAdRWD());
+      await getMining();
     } else {
       debugPrint("====== not geting new mining data");
     }
@@ -117,39 +124,39 @@ class WalletViewModel extends GetxController {
   }
 }
 
-var getmining = {}.obs;
+// var getmining = {}.obs;
 
-late int differenceInHours = 0;
-late int differenceInMinutes = 0;
-late int differenceInSeconds = 0;
+// late int differenceInHours = 0;
+// late int differenceInMinutes = 0;
+// late int differenceInSeconds = 0;
 
-Future<void> getMining() async {
-  final prefs = await SharedPreferences.getInstance();
-  final String? token;
+// Future<void> getMining() async {
+//   final prefs = await SharedPreferences.getInstance();
+//   final String? token;
 
-  token = prefs.getString('remToken');
+//   token = prefs.getString('remToken');
 
-  final response = await http.get(
-    Uri.parse(AppUrl.getMiningEndPoint),
-    headers: {'Authorization': 'Bearer $token'},
-  );
-  if (response.statusCode == 200) {
-    getmining.value = jsonDecode(response.body.toString());
-    print(getmining.value["message_title"]);
-    print(getmining.value["Mining_Details"]["created_at"]);
-    var createdAt = getmining.value["Mining_Details"]["created_at"];
-    final kolkata = tz.getLocation('Asia/Kolkata');
-    final now = tz.TZDateTime.now(kolkata);
-    print("Time zone package ============ $now");
+//   final response = await http.get(
+//     Uri.parse(AppUrl.getMiningEndPoint),
+//     headers: {'Authorization': 'Bearer $token'},
+//   );
+//   if (response.statusCode == 200) {
+//     getmining.value = jsonDecode(response.body.toString());
+//     print(getmining.value["message_title"]);
+//     print(getmining.value["Mining_Details"]["created_at"]);
+//     var createdAt = getmining.value["Mining_Details"]["created_at"];
+//     final kolkata = tz.getLocation('Asia/Kolkata');
+//     final now = tz.TZDateTime.now(kolkata);
+//     print("Time zone package ============ $now");
 
-    DateTime myDatetime = DateTime.parse(createdAt);
-    Duration difference = now.difference(myDatetime);
-    differenceInHours = difference.inHours == null ? 0 : difference.inHours;
-    print("===============Hours =========Hours $differenceInHours");
-  } else {
-    print("====== Mining fail data");
-  }
-}
+//     DateTime myDatetime = DateTime.parse(createdAt);
+//     Duration difference = now.difference(myDatetime);
+//     differenceInHours = difference.inHours == null ? 0 : difference.inHours;
+//     print("===============Hours =========Hours $differenceInHours");
+//   } else {
+//     print("====== Mining fail data");
+//   }
+// }
 
 // todo; Ohter function data is here
 
@@ -172,25 +179,6 @@ loadInterstitialAd() async {
       },
     ),
   );
-}
-
-void showInterstitialAd() async {
-  if (interstitialAd != null) {
-    interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        print("AdMob interstitial ad dismissed");
-        // Load a new interstitial ad when the previous one is dismissed
-        loadInterstitialAd();
-      },
-      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        print('Failed to show interstitial ad: $error');
-      },
-    );
-
-    await interstitialAd!.show().then((value) => loadInterstitialAd());
-  } else {
-    print('Interstitial ad is not ready.');
-  }
 }
 
 void showNoification(hours, title, body) async {

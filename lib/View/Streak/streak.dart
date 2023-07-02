@@ -30,9 +30,9 @@ Future<void> getMiners() async {
         .get(Uri.parse("https://maticlegend.com/api/top-miners?userId=$id"));
     if (response.statusCode == 200) {
       minerData = jsonDecode(response.body.toString());
-      print(minerData);
+      debugPrint(minerData);
     } else {
-      print("not getting data of TOp miners");
+      debugPrint("not getting data of TOp miners");
     }
   }
 }
@@ -49,9 +49,9 @@ Future<void> refferalMiners() async {
         .get(Uri.parse("https://maticlegend.com/api/top-refferals?userId=$id"));
     if (response.statusCode == 200) {
       refferalData = jsonDecode(response.body.toString());
-      print(refferalData);
+      debugPrint(refferalData);
     } else {
-      print("not getting data of TOp Refferal");
+      debugPrint("not getting data of TOp Refferal");
     }
   }
 }
@@ -218,6 +218,21 @@ class _StreakPageState extends State<StreakPage> {
                                             ),
                                             title: Row(
                                               children: [
+                                                CircleAvatar(
+                                                  backgroundImage: NetworkImage(minerData[
+                                                                      "data"][
+                                                                  "authUserMiner"]
+                                                              ["image"] ==
+                                                          ""
+                                                      ? "https://lh3.googleusercontent.com/pw/AJFCJaU0GU1whPNk7q4vw0eIfgsJP59K49IzweB9Vz2sz-Ph3fbgE5Yl1mrqNtfY3DXxUhSe3NFnciEkLUsVmCKfs3AatWQ-Mu7X5nXvFhDsZVF9dNtBSpRuU9Bjo_3VGffaNRS71rX8aKlsISZH2nW8hW9z=w225-h225-s-no"
+                                                      : minerData["data"]
+                                                              ["authUserMiner"]
+                                                          ["image"]),
+                                                  radius: 13,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
                                                 Text(
                                                   minerData["data"]
                                                               ["authUserMiner"]
@@ -283,6 +298,21 @@ class _StreakPageState extends State<StreakPage> {
                                           ),
                                           title: Row(
                                             children: [
+                                              CircleAvatar(
+                                                backgroundImage: NetworkImage(minerData[
+                                                                    "data"]
+                                                                ["top50Miners"]
+                                                            [index]["image"] ==
+                                                        null
+                                                    ? "https://lh3.googleusercontent.com/pw/AJFCJaU0GU1whPNk7q4vw0eIfgsJP59K49IzweB9Vz2sz-Ph3fbgE5Yl1mrqNtfY3DXxUhSe3NFnciEkLUsVmCKfs3AatWQ-Mu7X5nXvFhDsZVF9dNtBSpRuU9Bjo_3VGffaNRS71rX8aKlsISZH2nW8hW9z=w225-h225-s-no"
+                                                    : minerData["data"]
+                                                            ["top50Miners"]
+                                                        [index]["image"]),
+                                                radius: 13,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
                                               Text(
                                                 minerData["data"]["top50Miners"]
                                                         [index]["name"]
@@ -334,19 +364,16 @@ class _StreakPageState extends State<StreakPage> {
                                     ConnectionState.waiting) {
                                   return Center(
                                       child: loading(Get.width, Get.height));
-                             
                                 } else if (snapshot.connectionState ==
                                     ConnectionState.none) {
                                   return Center();
                                 } else {
                                   return ListView.builder(
                                     shrinkWrap: true,
-                                
                                     physics: NeverScrollableScrollPhysics(),
                                     itemCount: 1,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                  
                                       return Container(
                                         decoration: BoxDecoration(
                                             border: Border.all(
@@ -370,6 +397,22 @@ class _StreakPageState extends State<StreakPage> {
                                             ),
                                             title: Row(
                                               children: [
+                                                CircleAvatar(
+                                                  backgroundImage: NetworkImage(
+                                                      refferalData["data"][
+                                                                      "authUserMiner"]
+                                                                  ["image"] ==
+                                                              ""
+                                                          ? "https://lh3.googleusercontent.com/pw/AJFCJaU0GU1whPNk7q4vw0eIfgsJP59K49IzweB9Vz2sz-Ph3fbgE5Yl1mrqNtfY3DXxUhSe3NFnciEkLUsVmCKfs3AatWQ-Mu7X5nXvFhDsZVF9dNtBSpRuU9Bjo_3VGffaNRS71rX8aKlsISZH2nW8hW9z=w225-h225-s-no"
+                                                          : refferalData["data"]
+                                                                  [
+                                                                  "authUserMiner"]
+                                                              ["image"]),
+                                                  radius: 13,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
                                                 Text(
                                                   refferalData["data"]
                                                               ["authUserMiner"]
@@ -435,6 +478,22 @@ class _StreakPageState extends State<StreakPage> {
                                           ),
                                           title: Row(
                                             children: [
+                                              CircleAvatar(
+                                                backgroundImage: NetworkImage(
+                                                    refferalData["data"][
+                                                                        "top50Miners"]
+                                                                    [index]
+                                                                ["image"] ==
+                                                            null
+                                                        ? "https://lh3.googleusercontent.com/pw/AJFCJaU0GU1whPNk7q4vw0eIfgsJP59K49IzweB9Vz2sz-Ph3fbgE5Yl1mrqNtfY3DXxUhSe3NFnciEkLUsVmCKfs3AatWQ-Mu7X5nXvFhDsZVF9dNtBSpRuU9Bjo_3VGffaNRS71rX8aKlsISZH2nW8hW9z=w225-h225-s-no"
+                                                        : refferalData["data"]
+                                                                ["top50Miners"]
+                                                            [index]["image"]),
+                                                radius: 13,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
                                               Text(
                                                 refferalData["data"]
                                                             ["top50Miners"]

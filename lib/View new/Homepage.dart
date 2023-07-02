@@ -1,15 +1,22 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import 'package:wave_linear_progress_indicator/wave_linear_progress_indicator.dart';
+import '../Ads/Unity/unityads.dart';
 import '../View/HomePage/Attendance/attendance.dart';
+import '../View/bottomnav.dart';
 import '../View/refferal/refferal.dart';
 import '../data/response/status.dart';
+import '../main.dart';
 import '../res/AppIcons/appicons.dart';
 import '../res/Colorsnew/appcolors.dart';
 import '../res/components/genre_exception.dart';
 import '../res/components/no_internet_widget.dart';
 import '../utils/utils.dart';
+import '../view_models/controller/Ads_viewModel/adx_viewmodel.dart';
 import '../view_models/controller/BottomNavBar_view_model.dart/bottom_view_model.dart';
 import '../view_models/controller/Random_rewards_view_model/random_rewards_viewmodel.dart';
 import '../view_models/controller/Wallet_view_model/wallet_view_model.dart';
@@ -34,11 +41,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  BannerAd? _bannerAd;
+  bool _isLoaded = false;
+
+  final adUnitId = Platform.isAndroid
+      // ? "ca-app-pub-3940256099942544/6300978111"
+      // : "ca-app-pub-3940256099942544/6300978111";
+      ? '/21902364955,22948000438/CM_Blockrium_Network_InApp_Finance_Top/CM_Blockrium_Network_InApp_Finance_Banner'
+      : '/21902364955,22948000438/CM_Blockrium_Network_InApp_Finance_Top/CM_Blockrium_Network_InApp_Finance_Banner';
+
+  // TODO: replace this test ad unit with your own ad unit.
+
   final WalletViewModel _walletViewModel = WalletViewModel();
-  // MiningViewModel miningViewModel = Get.put(MiningViewModel());
   final BottomNavController bottomnavController = BottomNavController();
   final NewsController newsController = NewsController();
   final BrcUpdateController brcUpdateController = BrcUpdateController();
+  final AdxManagerController adxManagerController = AdxManagerController();
   @override
   void initState() {
     super.initState();
@@ -47,6 +65,9 @@ class _HomePageState extends State<HomePage> {
     _walletViewModel.userWallet();
     _walletViewModel.getMining();
     brcUpdateController.allBRCListApi();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await UnityAdManater.loadUnityAdRWD();
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       bottomnavController.getGiftData().then((value) {
         if (bottomnavController.isgift.value == "") {
@@ -56,6 +77,42 @@ class _HomePageState extends State<HomePage> {
         }
       });
     });
+
+// todo banner load
+    _bannerAd = BannerAd(
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        // Called when an ad is successfully received.
+        onAdLoaded: (ad) {
+          debugPrint('$ad loaded.');
+          setState(() {
+            _isLoaded = true;
+          });
+        },
+        // Called when an ad request failed.
+        onAdFailedToLoad: (ad, err) {
+          debugPrint('BannerAd failed to load: $err');
+          // Dispose the ad here to free resources.
+          ad.dispose();
+        },
+      ),
+    )..load();
+
+    // INT Ads load
+    adxManagerController.createInterstitialAd();
+  }
+
+  void customSetState() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    adxManagerController.interstitialAd?.dispose();
   }
 
   @override
@@ -106,7 +163,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 130,
+                        height: 125,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0),
@@ -175,17 +232,45 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             appbarIcon("Deposit", AppIcons.deposit),
-                            appbarIcon("Widhraw", AppIcons.withdraw),
+                            appbarIcon("withdraw", AppIcons.withdraw),
                             appbarIcon("Transfer", AppIcons.transfer),
                             appbarIcon("Stake", AppIcons.stake),
                           ],
                         ),
+                      ),
+                      SizedBox(
+                        height: 5,
                       )
                     ],
                   ))),
             ),
             SliverList(
               delegate: SliverChildListDelegate([
+                // ElevatedButton(
+                //     onPressed: () {
+                //       Navigator.pushReplacement(
+                //           context,
+                //           MaterialPageRoute(
+                //               builder: (BuildContext context) =>
+                //                   MyBottomNavbar()));
+                //     },
+                //     child: Text("data")),
+                // Container(
+                //     child: _bannerAd != null
+                //         ? SizedBox(
+                //             width: _bannerAd!.size.width.toDouble(),
+                //             height: _bannerAd!.size.height.toDouble(),
+                //             child: AdWidget(ad: _bannerAd!),
+                //           )
+                //         : SizedBox.shrink()),
+
+                // ElevatedButton(
+                //   onPressed: () {
+                //     adxManagerController.showInterstitialAd();
+                //   },
+                //   child: Text("Show INT Ads"),
+                // ),
+
                 Obx(() {
                   if (_walletViewModel.getmining.value == null) {
                     return CircularProgressIndicator();
@@ -193,25 +278,13 @@ class _HomePageState extends State<HomePage> {
                     var miningData = _walletViewModel.getmining.value;
                     if (miningData["message_title"] == null ||
                         miningData["Mining_Details"] == null) {
-                      // Handle the case where the required properties are null
-                      return miningContainerNull(context);
+                      return miningContainerNull(context, _walletViewModel);
                     }
 
                     var a = 24;
                     var b = _walletViewModel.differenceInHours;
                     var calculate = a - b;
                     debugPrint("calculate: ${calculate.toString()}");
-                    // minute
-                    // var totalMin = 60; // Total minutes in an hour
-                    // var apiMin = miningViewModel.differenceInMinutes;
-                    // var calculateMin = totalMin - apiMin;
-                    // debugPrint("calculateMin: ${calculateMin.toString()}");
-
-                    // // seconds
-                    // var totalSec = 60;
-                    // var apiSec = miningViewModel.differenceInSeconds;
-                    // var calculateSec = totalSec - apiSec;
-                    // debugPrint("calculateSec: ${calculateSec.toString()}");
 
                     var aa = 24;
                     var bb = _walletViewModel.differenceInHours;
@@ -222,57 +295,6 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         miningContainer(context, calculate, calculatePercentage,
                             _walletViewModel),
-                        // WaveLinearProgressIndicator(
-                        //   value: () {
-                        //     if (_walletViewModel.differenceInHours >= 24) {
-                        //       return 0.0;
-                        //     } else if (_walletViewModel.differenceInHours < 0) {
-                        //       return 0.0;
-                        //     } else {
-                        //       return calculatePercentage;
-                        //     }
-                        //   }(),
-                        //   labelDecoration: BoxDecoration(
-                        //     gradient: LinearGradient(colors: [
-                        //       AppColor.redColor,
-                        //       AppColor.pinkColor,
-                        //       AppColor.purpleColor
-                        //     ]),
-                        //     borderRadius: BorderRadius.all(Radius.circular(50)),
-                        //   ),
-                        //   waveBackgroundColor: AppColor.pinkColor,
-                        //   enableBounceAnimation: true,
-                        //   waveColor: AppColor.purpleColor,
-                        //   backgroundColor: Colors.grey[150],
-                        // ),
-                        // SlideCountdown(
-                        //   textStyle: TextStyle(color: Colors.white),
-                        //   decoration: BoxDecoration(
-                        //     borderRadius: BorderRadius.all(Radius.circular(10)),
-                        //     gradient: LinearGradient(colors: [
-                        //       AppColor.redColor,
-                        //       AppColor.pinkColor,
-                        //       AppColor.purpleColor
-                        //     ]),
-                        //   ),
-                        //   onChanged: (value) {},
-                        //   duration: Duration(
-                        //     hours: calculate1,
-                        //     minutes: 0,
-                        //   ),
-                        // ),
-                        // Text(
-                        //   miningData["message_title"],
-                        //   style: TextStyle(color: Colors.white),
-                        // ),
-                        // Text(
-                        //   miningData["Mining_Details"]["created_at"],
-                        //   style: TextStyle(color: Colors.white),
-                        // ),
-                        // Text(
-                        //   _walletViewModel.differenceInHours.toString(),
-                        //   style: TextStyle(color: Colors.white),
-                        // ),
                       ],
                     );
                   }

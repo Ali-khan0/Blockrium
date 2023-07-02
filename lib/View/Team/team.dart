@@ -28,11 +28,11 @@ Future getProfile() async {
   id = prefs.getString('userid');
   token = prefs.getString('remToken');
 // }
-  print("userid ============ $id");
+  debugPrint("userid ============ $id");
 
-  print("remToken ============ $token");
+  debugPrint("remToken ============ $token");
   if (token != null) {
-    print("not null");
+    debugPrint("not null");
     final response = await http.get(
       Uri.parse(
         AppUrl.getTeamData,
@@ -41,9 +41,9 @@ Future getProfile() async {
     );
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
-      print(data["message"]);
+      debugPrint(data["message"]);
     } else {
-      print("====== not geting data");
+      debugPrint("====== not geting data");
     }
   }
 }

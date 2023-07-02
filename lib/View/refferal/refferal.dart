@@ -92,7 +92,7 @@ class _ShareRefferalState extends State<ShareRefferal> {
   //         AppLovinMAX.showInterstitial("be06615f323317a6");
   //       }
   //       // Interstitial ad is ready to be shown. AppLovinMAX.isInterstitialReady(_interstitial_ad_unit_id) will now return 'true'
-  //       print('Interstitial ad loaded from ' + ad.networkName);
+  //       debugdebugPrint('Interstitial ad loaded from ' + ad.networkName);
 
   //       // Reset retry attempt
   //       _interstitialRetryAttempt1 = 0;
@@ -104,7 +104,7 @@ class _ShareRefferalState extends State<ShareRefferal> {
 
   //       int retryDelay = pow(2, min(6, _interstitialRetryAttempt1)).toInt();
 
-  //       print('Interstitial ad failed to load with code ' +
+  //       debugdebugPrint('Interstitial ad failed to load with code ' +
   //           error.code.toString() +
   //           ' - retrying in ' +
   //           retryDelay.toString() +
@@ -135,7 +135,7 @@ class _ShareRefferalState extends State<ShareRefferal> {
   //   AppLovinMAX.setInterstitialListener(InterstitialListener(
   //     onAdLoadedCallback: (ad) {
   //       // Interstitial ad is ready to be shown. AppLovinMAX.isInterstitialReady(_interstitial_ad_unit_id) will now return 'true'
-  //       print('Interstitial ad loaded from ' + ad.networkName);
+  //       debugdebugPrint('Interstitial ad loaded from ' + ad.networkName);
 
   //       // Reset retry attempt
   //       _interstitialRetryAttempt = 0;
@@ -147,7 +147,7 @@ class _ShareRefferalState extends State<ShareRefferal> {
 
   //       int retryDelay = pow(2, min(6, _interstitialRetryAttempt)).toInt();
 
-  //       print('Interstitial ad failed to load with code ' +
+  //       debugdebugPrint('Interstitial ad failed to load with code ' +
   //           error.code.toString() +
   //           ' - retrying in ' +
   //           retryDelay.toString() +
@@ -181,7 +181,7 @@ class _ShareRefferalState extends State<ShareRefferal> {
     //       AppLovinMAX.showInterstitial("a61172581abfd50a");
     //     }
     //     // Interstitial ad is ready to be shown. AppLovinMAX.isInterstitialReady(_interstitial_ad_unit_id) will now return 'true'
-    //     print('Interstitial ad loaded from ' + ad.networkName);
+    //     debugdebugPrint('Interstitial ad loaded from ' + ad.networkName);
 
     //     // Reset retry attempt
     //     _interstitialRetryAttempt1 = 0;
@@ -193,7 +193,7 @@ class _ShareRefferalState extends State<ShareRefferal> {
 
     //     int retryDelay = pow(2, min(6, _interstitialRetryAttempt1)).toInt();
 
-    //     print('Interstitial ad failed to load with code ' +
+    //     debugdebugPrint('Interstitial ad failed to load with code ' +
     //         error.code.toString() +
     //         ' - retrying in ' +
     //         retryDelay.toString() +

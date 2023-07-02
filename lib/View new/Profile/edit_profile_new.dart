@@ -138,7 +138,7 @@ class EditProfileController extends GetxController {
         Utils.snackbar(data["errors"], "");
       }
     } catch (e) {
-      print(e.toString());
+     debugPrint(e.toString());
       Utils.snackbar("Something went wrong $e", "");
     } finally {
       // isLoading.value = false;

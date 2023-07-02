@@ -42,97 +42,8 @@ class _AttendanceState extends State<Attendance> {
   var _interstitialRetryAttempt = 0;
 
   void initializeInterstitialAdsAttendance() {
-    // AppLovinMAX.setInterstitialListener(InterstitialListener(
-    //   onAdLoadedCallback: (ad) async {
-    //     bool isReady =
-    //         (await AppLovinMAX.isInterstitialReady(_interstitial_ad_unit_id))!;
-    //     if (isReady) {
-    //       AppLovinMAX.showInterstitial(_interstitial_ad_unit_id);
-    //     }
-    //     // Interstitial ad is ready to be shown. AppLovinMAX.isInterstitialReady(_interstitial_ad_unit_id) will now return 'true'
-    //     print('Interstitial ad loaded from ' + ad.networkName);
-
-    //     // Reset retry attempt
-    //     _interstitialRetryAttempt = 0;
-    //   },
-    //   onAdLoadFailedCallback: (adUnitId, error) {
-    //     // Interstitial ad failed to load
-    //     // We recommend retrying with exponentially higher delays up to a maximum delay (in this case 64 seconds)
-    //     _interstitialRetryAttempt = _interstitialRetryAttempt + 1;
-
-    //     int retryDelay = pow(2, min(6, _interstitialRetryAttempt)).toInt();
-
-    //     print('Interstitial ad failed to load with code ' +
-    //         error.code.toString() +
-    //         ' - retrying in ' +
-    //         retryDelay.toString() +
-    //         's');
-
-    //     Future.delayed(Duration(milliseconds: retryDelay * 1000), () {
-    //       AppLovinMAX.loadInterstitial(_interstitial_ad_unit_id);
-    //     });
-    //   },
-    //   onAdDisplayedCallback: (ad) {},
-    //   onAdDisplayFailedCallback: (ad, error) {},
-    //   onAdClickedCallback: (ad) {
-    //     setState(() {});
-    //   },
-    //   onAdHiddenCallback: (ad) {
     addAttendance();
-    // UnityAdManater.showRwdAd();
     setState(() {});
-    showInterstitialAd();
-    //   },
-    // ));
-
-    // // Load the first interstitial
-    // AppLovinMAX.loadInterstitial(_interstitial_ad_unit_id);
-  }
-
-  final String interstitialAdUnitId =
-      '/22925651469/Mix2ad_app_Blockrium_interstitial';
-  late InterstitialAd interstitialAd;
-
-  loadInterstitialAd() async {
-    final AdRequest request = AdRequest();
-    await InterstitialAd.load(
-      adUnitId: interstitialAdUnitId,
-      request: request,
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (InterstitialAd ad) {
-          print("admob INT ad loaded");
-          interstitialAd = ad;
-        },
-        onAdFailedToLoad: (LoadAdError error) {
-          print('Interstitial ad failed to load: $error');
-        },
-      ),
-    );
-  }
-
-  void showInterstitialAd() async {
-    if (interstitialAd != null) {
-      interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-        onAdDismissedFullScreenContent: (InterstitialAd ad) {
-          print("AdMob interstitial ad dismissed");
-          // Load a new interstitial ad when the previous one is dismissed
-          loadInterstitialAd();
-        },
-        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-          print('Failed to show interstitial ad: $error');
-        },
-      );
-
-      await interstitialAd!.show().then((value) => loadInterstitialAd());
-    } else {
-      print('Interstitial ad is not ready.');
-    }
-  }
-
-  @override
-  void dispose() {
-    interstitialAd?.dispose();
-    super.dispose();
   }
 
   Future getProfile() async {
@@ -144,11 +55,11 @@ class _AttendanceState extends State<Attendance> {
     id = prefs.getString('userid');
     token = prefs.getString('remToken');
 // }
-    print("userid ============ $id");
+    debugPrint("userid ============ $id");
 
-    print("remToken ============ $token");
+    debugPrint("remToken ============ $token");
     if (token != null) {
-      print("not null");
+      debugPrint("not null");
       final response = await http.get(
         Uri.parse(
           AppUrl.getuserProfile,
@@ -157,10 +68,10 @@ class _AttendanceState extends State<Attendance> {
       );
       if (response.statusCode == 200) {
         data = jsonDecode(response.body.toString());
-        print(data["message"]);
-        print(data["attendance"]);
+        debugPrint(data["message"]);
+        debugPrint(data["attendance"]);
       } else {
-        print("====== not geting data");
+        debugPrint("====== not geting data");
       }
     }
   }
@@ -176,7 +87,7 @@ class _AttendanceState extends State<Attendance> {
     token = prefs.getString('remToken');
 
     if (token != null) {
-      print("not null");
+      debugPrint("not null");
 
       var response = await post(
         Uri.parse(AppUrl.addAttendanceEntPoint),
@@ -189,6 +100,8 @@ class _AttendanceState extends State<Attendance> {
       if (response.statusCode == 200) {
         attendancedata = jsonDecode(response.body.toString());
         Utils.snackbar(attendancedata["message"].toString(), "");
+        UnityAdManater.showRwdAd()
+            .then((value) => UnityAdManater.loadUnityAdRWD());
         // UnityAdManater.showRwdAd();
       } else {
         Utils.snackbar("Something went wrong", "");
@@ -198,7 +111,7 @@ class _AttendanceState extends State<Attendance> {
 
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await loadInterstitialAd();
+      await UnityAdManater.loadUnityAdRWD();
     });
 
     getProfile();
@@ -253,7 +166,7 @@ class _AttendanceState extends State<Attendance> {
                       //     // lst
                       //     List.generate(1,
                       //         (index) => DateTime.now().subtract(Duration(days: index * 1))),
-                      onDateChanged: (value) => print(value),
+                      onDateChanged: (value) => debugPrint(value),
                       firstDate: DateTime.now().subtract(Duration(days: 140)),
                       lastDate: DateTime.now(),
                     ),
@@ -304,7 +217,7 @@ class _AttendanceState extends State<Attendance> {
                     AppColor.pinkColor.withOpacity(0.3)
                   ]),
               borderRadius: BorderRadius.all(Radius.circular(10))),
-          height: h * 0.07,
+          height: 50,
           width: w,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -319,13 +232,17 @@ class _AttendanceState extends State<Attendance> {
                   },
                   child: Card(
                     child: Container(
-                      height: h * 0.05,
-                      width: w * 0.350,
+                      // height: h * 0.05,
                       child: Center(
-                        child: Text(
-                          "Claim Attendance",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 4.0, bottom: 4.0, left: 8.0, right: 8.0),
+                          child: Text(
+                            "Claim Attendance",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
                         ),
                       ),
                       decoration: BoxDecoration(

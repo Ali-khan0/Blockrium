@@ -46,11 +46,11 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
     id = prefs.getString('userid');
     token = prefs.getString('remToken');
 // }
-    print("userid ============ $id");
+    debugPrint("userid ============ $id");
 
-    print("remToken ============ $token");
+    debugPrint("remToken ============ $token");
     if (token != null) {
-      print("not null");
+      debugPrint("not null");
       final response = await http.get(
         Uri.parse(
           AppUrl.getuserProfile,
@@ -59,9 +59,9 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
       );
       if (response.statusCode == 200) {
         data = jsonDecode(response.body.toString());
-        print(data["message"]);
+        debugPrint(data["message"]);
       } else {
-        print("====== not geting data");
+        debugPrint("====== not geting data");
       }
     }
   }
@@ -137,6 +137,7 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
                                   Get.to(EditProfile());
                                 },
                                 child: Container(
+                                  width: Get.width * 0.3,
                                   decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
@@ -151,8 +152,14 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
                                       ]),
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10))),
-                                  child: Center(
-                                    child: Text("Edit"),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(1.0),
+                                    child: Center(
+                                      child: Text(
+                                        "Edit",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               )
@@ -228,7 +235,7 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
                         _walletViewModel.joinRefealCTRL.value,
                         data["is_referred_by"]);
                     // _showMyDialog(context, h, w);
-                    // print(data["is_referred_by"]);
+                    // debugPrint(data["is_referred_by"]);
                     // enterRefCodeDialog(
                     //     context, h, w, joinRefealCTRL, data["is_referred_by"]);
                   },

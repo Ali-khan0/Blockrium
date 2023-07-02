@@ -16,7 +16,6 @@ import 'res/colors/app_colors.dart';
 import 'view_models/services/no_internet.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-
 FlutterLocalNotificationsPlugin notificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
@@ -25,7 +24,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await UnityAds.init(
-    gameId: '5212184',
+    gameId: '5320122',
     onComplete: () => print('Initialization Complete'),
     onFailed: (error, message) =>
         print('Initialization Failed: $error $message'),
@@ -65,17 +64,24 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Blockrium',
-        theme: ThemeData(
-            fontFamily: 'Montserrat',
-            primarySwatch: Colors.red,
-            useMaterial3: true),
-        home: InternetConnectivityWidget());
+      debugShowCheckedModeBanner: false,
+      title: 'Blockrium',
+      theme: ThemeData(
+        fontFamily: 'Montserrat',
+        primarySwatch: Colors.red,
+        useMaterial3: true,
+      ),
+      home: InternetConnectivityWidget(),
+    );
   }
 }
 

@@ -41,7 +41,7 @@
 // await _otplessFlutterPlugin.loginUsingWhatsapp(intentUrl: intentUrl);
 // switch (result['code']) {
 // case "581":
-// print(result['message']);
+// debugdebugPrint(result['message']);
 // //TODO: handle whatsapp not foundbreak;
 // default:
 // }

@@ -49,11 +49,11 @@ class _ProfileState extends State<Profile> {
     id = prefs.getString('userid');
     token = prefs.getString('remToken');
 // }
-    print("userid ============ $id");
+    debugPrint("userid ============ $id");
 
-    print("remToken ============ $token");
+    debugPrint("remToken ============ $token");
     if (token != null) {
-      print("not null");
+      debugPrint("not null");
       final response = await http.get(
         Uri.parse(
           AppUrl.getuserProfile,
@@ -62,9 +62,9 @@ class _ProfileState extends State<Profile> {
       );
       if (response.statusCode == 200) {
         data = jsonDecode(response.body.toString());
-        print(data["message"]);
+        debugPrint(data["message"]);
       } else {
-        print("====== not geting data");
+        debugPrint("====== not geting data");
       }
     }
   }
@@ -84,12 +84,12 @@ class _ProfileState extends State<Profile> {
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
-        // print(data["message"]);
+        // debugPrint(data["message"]);
         //  final prefs = await SharedPreferences.getInstance();
         prefs.setBool("isLoggedIn", false);
         Utils.snackbar("Logout Successfully", "");
         Get.offAll(LoginPage());
-        // print(
+        // debugPrint(
         //     "account created successfully: Name: $name, password: $password, email: $email, gymLocation: $gymLoc ");
       } else {
         Utils.snackbar("Something went wrong", "");
@@ -202,7 +202,7 @@ class _ProfileState extends State<Profile> {
                                                 .toString()),
                                             InkWell(
                                               onTap: () {
-                                                // print(data["message"].toString());
+                                                // debugPrint(data["message"].toString());
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
@@ -310,7 +310,7 @@ class _ProfileState extends State<Profile> {
             InkWell(
               onTap: () {
                 // _showMyDialog(context, h, w);
-                print(data["is_referred_by"]);
+                debugPrint(data["is_referred_by"]);
                 enterRefCodeDialog(
                     context, h, w, joinRefealCTRL, data["is_referred_by"]);
               },
