@@ -51,6 +51,39 @@ Widget roundButton(h, w, title, isLoading) {
     ),
   );
 }
+Widget followButton(h, w, title, isLoading) {
+  return Container(
+    height: h,
+    width: w ,
+    decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 8,
+          ),
+        ],
+        gradient: LinearGradient(colors: [
+          Color(0xff9C3FE4),
+          Color(0xffC65647),
+        ]),
+        borderRadius: BorderRadius.all(Radius.circular(10))),
+    child: Center(
+      child: isLoading
+          ? LoadingAnimationWidget.staggeredDotsWave(
+              color: Colors.white,
+              size: 40,
+            )
+          : Text(
+              title,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.white),
+            ),
+    ),
+  );
+}
 
 Widget roundButton2(h, w, title) {
   return Container(

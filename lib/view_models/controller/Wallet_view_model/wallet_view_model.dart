@@ -124,39 +124,6 @@ class WalletViewModel extends GetxController {
   }
 }
 
-// var getmining = {}.obs;
-
-// late int differenceInHours = 0;
-// late int differenceInMinutes = 0;
-// late int differenceInSeconds = 0;
-
-// Future<void> getMining() async {
-//   final prefs = await SharedPreferences.getInstance();
-//   final String? token;
-
-//   token = prefs.getString('remToken');
-
-//   final response = await http.get(
-//     Uri.parse(AppUrl.getMiningEndPoint),
-//     headers: {'Authorization': 'Bearer $token'},
-//   );
-//   if (response.statusCode == 200) {
-//     getmining.value = jsonDecode(response.body.toString());
-//     print(getmining.value["message_title"]);
-//     print(getmining.value["Mining_Details"]["created_at"]);
-//     var createdAt = getmining.value["Mining_Details"]["created_at"];
-//     final kolkata = tz.getLocation('Asia/Kolkata');
-//     final now = tz.TZDateTime.now(kolkata);
-//     print("Time zone package ============ $now");
-
-//     DateTime myDatetime = DateTime.parse(createdAt);
-//     Duration difference = now.difference(myDatetime);
-//     differenceInHours = difference.inHours == null ? 0 : difference.inHours;
-//     print("===============Hours =========Hours $differenceInHours");
-//   } else {
-//     print("====== Mining fail data");
-//   }
-// }
 
 // todo; Ohter function data is here
 
@@ -211,38 +178,3 @@ void showNoification(hours, title, body) async {
       androidAllowWhileIdle: true);
 }
 
-// class MiningViewModel extends GetxController {
-//   var getmining = {}.obs;
-
-//   late int differenceInHours = 0;
-//   late int differenceInMinutes = 0;
-//   late int differenceInSeconds = 0;
-
-//   Future<void> getMining() async {
-//     final prefs = await SharedPreferences.getInstance();
-//     final String? token;
-
-//     token = prefs.getString('remToken');
-
-//     final response = await http.get(
-//       Uri.parse(AppUrl.getMiningEndPoint),
-//       headers: {'Authorization': 'Bearer $token'},
-//     );
-//     if (response.statusCode == 200) {
-//       getmining.value = jsonDecode(response.body.toString());
-//       print(getmining.value["message_title"]);
-//       print(getmining.value["Mining_Details"]["created_at"]);
-//       var createdAt = getmining.value["Mining_Details"]["created_at"];
-//       final kolkata = tz.getLocation('Asia/Kolkata');
-//       final now = tz.TZDateTime.now(kolkata);
-//       print("Time zone package ============ $now");
-
-//       DateTime myDatetime = DateTime.parse(createdAt);
-//       Duration difference = now.difference(myDatetime);
-//       differenceInHours = difference.inHours == null ? 0 : difference.inHours;
-//       print("===============Hours =========Hours $differenceInHours");
-//     } else {
-//       print("====== Mining fail data");
-//     }
-//   }
-// }

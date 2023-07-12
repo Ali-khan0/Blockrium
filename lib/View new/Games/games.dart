@@ -49,15 +49,15 @@ class _GamesPageState extends State<GamesPage> {
                 body: SingleChildScrollView(
                   child: Column(
                     children: [
-                      UnityBannerAd(
-                        placementId: 'Banner_Android',
-                        onLoad: (placementId) =>
-                            print('Banner loaded: $placementId'),
-                        onClick: (placementId) =>
-                            print('Banner clicked: $placementId'),
-                        onFailed: (placementId, error, message) => print(
-                            'Banner Ad $placementId failed: $error $message'),
-                      ),
+                      // UnityBannerAd(
+                      //   placementId: 'Banner_Android',
+                      //   onLoad: (placementId) =>
+                      //       print('Banner loaded: $placementId'),
+                      //   onClick: (placementId) =>
+                      //       print('Banner clicked: $placementId'),
+                      //   onFailed: (placementId, error, message) => print(
+                      //       'Banner Ad $placementId failed: $error $message'),
+                      // ),
                       // ClipRRect(
                       //   borderRadius: BorderRadius.circular(
                       //       10.0), // Set the desired border radius value

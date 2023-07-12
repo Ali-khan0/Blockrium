@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:slide_countdown/slide_countdown.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wave_linear_progress_indicator/wave_linear_progress_indicator.dart';
 import '../Ads/Unity/unityads.dart';
 import '../View/HomePage/Attendance/attendance.dart';
@@ -324,73 +326,7 @@ class _HomePageState extends State<HomePage> {
                         "Invite your friends & earn 10 BRC"),
                   );
                 }),
-                ListTile(
-                  title: Text(
-                    "Crypto News",
-                    style: TextStyle(color: AppColor.whiteColor),
-                  ),
-                  trailing: InkWell(
-                    onTap: () {
-                      Get.to(NewsFull());
-                    },
-                    child: Text(
-                      "See All",
-                      style: TextStyle(color: AppColor.whiteColor),
-                    ),
-                  ),
-                ),
-                Obx(() {
-                  switch (newsController.rxRequestStatus.value) {
-                    case Status.LOADING:
-                      return loading(Get.width, Get.height * 0.2);
 
-                    case Status.ERROR:
-                      if (newsController.error.value == "No internet") {
-                        return InterNetExceptionWidget(onPress: () {
-                          newsController.refreshallNewsListApi();
-                        });
-                      } else {
-                        return GeneralExceptionWidget(onPress: () {
-                          newsController.refreshallNewsListApi();
-                        });
-                      }
-                    case Status.COMPLETED:
-                      return ListView.builder(
-                        padding: EdgeInsets.all(0),
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: 2,
-                        itemBuilder: (BuildContext context, int index) {
-                          String title = newsController
-                                  .allNewsList.value.userData![index].title ??
-                              "";
-                          String date = newsController.allNewsList.value
-                                  .userData![index].createdAt ??
-                              "";
-                          String image = newsController
-                                  .allNewsList.value.userData![index].image ??
-                              "";
-                          String desc = newsController.allNewsList.value
-                                  .userData![index].description ??
-                              "";
-                          String url = newsController
-                                  .allNewsList.value.userData![index].link ??
-                              "";
-                          return InkWell(
-                              onTap: () {
-                                Get.to(NewsDetailPageNew(
-                                    image: image,
-                                    title: title,
-                                    date: date,
-                                    para: desc,
-                                    url: url));
-                              },
-                              child:
-                                  newsContainer(context, image, title, date));
-                        },
-                      );
-                  }
-                }),
                 ListTile(
                   title: Text(
                     "BRC Update",
@@ -459,6 +395,90 @@ class _HomePageState extends State<HomePage> {
                   }
                 }),
                 miningRateContainer(context),
+
+                ListTile(
+                  title: Text(
+                    "Social Links",
+                    style: TextStyle(color: AppColor.whiteColor),
+                  ),
+                ),
+
+                CarouselSlider(
+                  items: newsController.socilMediaLinks
+                      .asMap()
+                      .entries
+                      .map((entry) {
+                    int index = entry.key;
+                    String imageUrl = entry.value;
+                    String socialType = newsController.socialType[index];
+
+                    return Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white38),
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              AppColor.purpleColor.withOpacity(0.3),
+                              AppColor.pinkColor.withOpacity(0.3)
+                            ]),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(imageUrl),
+                                    fit: BoxFit.cover),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              ),
+                              height: 350,
+                            ),
+                            Positioned(
+                              left: 0,
+                              right: 0,
+                              bottom: 0,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0,
+                                  horizontal: 8.0,
+                                ),
+                                child: InkWell(
+                                  onTap: () async {
+                                    String link =
+                                        newsController.socialLinks[index];
+                                    // Open the link using a suitable method, such as launchURL
+                                    // For example, you can use the url_launcher package:
+                                    await launch(link);
+                                  },
+                                  child: followButton(
+                                    40.0,
+                                    150.0,
+                                    "Open $socialType",
+                                    false,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  options: CarouselOptions(
+                    autoPlay: true,
+                    enlargeCenterPage: true,
+                    onPageChanged: (index, reason) {
+                      newsController.updateSlider(index);
+                    },
+                    height: 300,
+                  ),
+                ),
+
                 SizedBox(
                   height: 50,
                 ),

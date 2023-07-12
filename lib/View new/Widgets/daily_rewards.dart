@@ -14,6 +14,7 @@ class DailyRewardsContainer extends StatefulWidget {
 class _DailyRewardsContainerState extends State<DailyRewardsContainer> {
   final RandomRewardsController randomRewardsController =
       RandomRewardsController();
+
   @override
   void initState() {
     super.initState();
@@ -24,109 +25,126 @@ class _DailyRewardsContainerState extends State<DailyRewardsContainer> {
   Widget build(BuildContext context) {
     return Obx(() {
       var index = int.parse(randomRewardsController.rewardsStatus.value);
-      return Container(
-        margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
-        width: MediaQuery.of(context).size.width,
-        height: 230,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.white38),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              AppColor.purpleColor.withOpacity(0.3),
-              AppColor.pinkColor.withOpacity(0.3)
-            ],
+      return Stack(
+        children: [
+          Container(
+            margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+            width: MediaQuery.of(context).size.width,
+            height: 230,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/rewardsbg.gif"), fit: BoxFit.cover),
+              border: Border.all(color: Colors.white38),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
           ),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Daily Rewards",
-                    style: TextStyle(
-                      color: AppColor.whiteColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          gradient: LinearGradient(colors: [
-                            AppColor.redColor,
-                            AppColor.pinkColor,
-                            AppColor.purpleColor
-                          ])),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          "${index} /3 Rewards",
-                          style: TextStyle(color: AppColor.whiteColor),
-                        ),
-                      ),
-                    ),
-                  )
+          Container(
+            margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+            width: MediaQuery.of(context).size.width,
+            height: 230,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  AppColor.purpleColor.withOpacity(0.3),
+                  AppColor.pinkColor.withOpacity(0.3),
                 ],
               ),
+              border: Border.all(color: Colors.white38),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //     rewardsClaim(context),
-            //     rewardsUnLocked(context),
-            //     rewardsLocked(context, "Claim second to unlock"),
-            //   ],
-            // )
-            index == 0
-                ? Row(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Daily Rewards",
+                        style: TextStyle(
+                          color: AppColor.whiteColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 15.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            gradient: LinearGradient(
+                              colors: [
+                                AppColor.redColor,
+                                AppColor.pinkColor,
+                                AppColor.purpleColor,
+                              ],
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Text(
+                              "${index} /3 Rewards",
+                              style: TextStyle(color: AppColor.whiteColor),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (index == 0)
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       rewardsUnLocked(
-                          context, randomRewardsController.randomRewardsAdd),
+                        context,
+                        randomRewardsController.randomRewardsAdd,
+                      ),
                       rewardsLocked(context, "Claim first to unlock"),
-                      rewardsLocked(context, "Claim second to unlock")
+                      rewardsLocked(context, "Claim second to unlock"),
                     ],
                   )
-                : index == 1
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          rewardsClaim(context),
-                          rewardsUnLocked(context,
-                              randomRewardsController.randomRewardsAdd),
-                          rewardsLocked(context, "Claim second to unlock")
-                        ],
-                      )
-                    : index == 2
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              rewardsClaim(context),
-                              rewardsClaim(context),
-                              rewardsUnLocked(context,
-                                  randomRewardsController.randomRewardsAdd),
-                            ],
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              rewardsClaim(context),
-                              rewardsClaim(context),
-                              rewardsClaim(context),
-                            ],
-                          )
-          ],
-        ),
+                else if (index == 1)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      rewardsClaim(context),
+                      rewardsUnLocked(
+                        context,
+                        randomRewardsController.randomRewardsAdd,
+                      ),
+                      rewardsLocked(context, "Claim second to unlock"),
+                    ],
+                  )
+                else if (index == 2)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      rewardsClaim(context),
+                      rewardsClaim(context),
+                      rewardsUnLocked(
+                        context,
+                        randomRewardsController.randomRewardsAdd,
+                      ),
+                    ],
+                  )
+                else
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      rewardsClaim(context),
+                      rewardsClaim(context),
+                      rewardsClaim(context),
+                    ],
+                  ),
+              ],
+            ),
+          ),
+        ],
       );
     });
   }
@@ -225,7 +243,7 @@ Widget rewardsUnLocked(context, func) {
       children: [
         Image(
           image: AssetImage(AppIcons.gift),
-          width: MediaQuery.of(context).size.width * 0.1,
+          width: MediaQuery.of(context).size.width * 0.13,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 2.0, right: 2.0),

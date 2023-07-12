@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class AdxManagerController extends GetxController{
- final adUnitIdINT = Platform.isAndroid
-      ? '/21902364955,22948000438/CM_Blockrium_Network_InApp_Finance_Top/CM_Blockrium_Network_InApp_Finance_Interstitial'
-      : '/21902364955,22948000438/CM_Blockrium_Network_InApp_Finance_Top/CM_Blockrium_Network_InApp_Finance_Interstitial';
-
-   InterstitialAd? interstitialAd;
-    void createInterstitialAd() {
+class AdxManagerController extends GetxController {
+  final adUnitIdINT = Platform.isAndroid
+      ? '/7047,22946396544/apl/mix2ad3223/maticlegend.web3/interstitialinapp'
+      : '/7047,22946396544/apl/mix2ad3223/maticlegend.web3/interstitialinapp';
+  InterstitialAd? interstitialAd;
+  void createInterstitialAd() {
     InterstitialAd.load(
-      adUnitId: "ca-app-pub-3940256099942544/1033173712",
-      request: AdRequest(),
+      adUnitId: adUnitIdINT,
+      request:const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
           interstitialAd = ad;
@@ -41,5 +40,4 @@ class AdxManagerController extends GetxController{
       interstitialAd!.show();
     }
   }
-
 }

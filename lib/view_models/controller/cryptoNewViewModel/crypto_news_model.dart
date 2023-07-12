@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/response/status.dart';
@@ -7,10 +8,26 @@ import '../../../repository/games_repo/all_games_repo.dart';
 import '../../../repository/news_repo/news_repo.dart';
 
 class NewsController extends GetxController {
+  var sliderIndex = RxInt(0);
 
- 
- 
-  
+  void updateSlider(int value) {
+    sliderIndex.value = value;
+    debugPrint(value.toString());
+  }
+
+  List socilMediaLinks = [
+    'assets/telegramprofile.jpg',
+    'assets/twitterprofile.jpg',
+    'assets/linkedin.jpg'
+  ];
+
+  List socialType = ["Telegram", "Twitter", "LinkedIn"];
+  List socialLinks = [
+    "https://t.me/blockrium",
+    "https://twitter.com/Blockrium",
+    "https://www.linkedin.com/company/blockrium/"
+  ];
+
   final _api = NewsRepositry();
 
   final rxRequestStatus = Status.LOADING.obs;
